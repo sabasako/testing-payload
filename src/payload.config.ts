@@ -19,9 +19,46 @@ import { Color } from './collections/Color'
 import { BlogImages } from './collections/Blog-images'
 import { BlogPost } from './collections/BlogPost'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const storage = s3Storage({
+  collections: {
+    'furniture-images': {
+      // adapter: 's3',
+      disableLocalStorage: true,
+      prefix: 'furniture-images', // Optional prefix for uploaded files
+      generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) => {
+        console.log('filename:', filename)
+        console.log('prefix:', prefix)
+
+        console.log(
+          `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
+        )
+
+        return `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`
+      },
+    },
+    'blog-images': {
+      disableLocalStorage: true,
+      prefix: 'blog-images',
+      generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) =>
+        `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
+    },
+  },
+  bucket: process.env.R2_BUCKET!,
+  config: {
+    endpoint: process.env.R2_ENDPOINT!,
+    credentials: {
+      accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    },
+    region: 'auto', // Required for R2
+    forcePathStyle: true, // Required for R2
+  },
+})
 
 export default buildConfig({
   admin: {
@@ -32,7 +69,7 @@ export default buildConfig({
   },
   i18n: {
     fallbackLanguage: 'en',
-    supportedLanguages: { en },
+    // supportedLanguages: { en },
   },
   collections: [Users, FurnitureImages, Categories, Furniture, Shop, Color, BlogImages, BlogPost],
   editor: lexicalEditor(),
@@ -53,6 +90,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    storage,
     // storage-adapter-placeholder
   ],
 })
