@@ -1,4 +1,3 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -7,19 +6,18 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { en } from '@payloadcms/translations/languages/en'
-// import { ka } from '@payloadcms/translations/languages/ka'
-
 import { Users } from './collections/Users'
-import { FurnitureImages } from './collections/Furniture-images'
+import { FurnitureImages } from './collections/FurnitureImages'
 import { Categories } from './collections/Categories'
 import { Furniture } from './collections/Furniture'
 import { Shop } from './collections/Shop'
 import { Color } from './collections/Color'
-import { BlogImages } from './collections/Blog-images'
+import { BlogImages } from './collections/BlogImages'
 import { BlogPost } from './collections/BlogPost'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { en } from '@payloadcms/translations/languages/en'
+import { customTranslations, ka } from './translations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,16 +28,8 @@ const storage = s3Storage({
       // adapter: 's3',
       disableLocalStorage: true,
       prefix: 'furniture-images', // Optional prefix for uploaded files
-      generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) => {
-        console.log('filename:', filename)
-        console.log('prefix:', prefix)
-
-        console.log(
-          `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
-        )
-
-        return `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`
-      },
+      generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) =>
+        `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
     },
     'blog-images': {
       disableLocalStorage: true,
@@ -48,6 +38,9 @@ const storage = s3Storage({
         `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
     },
   },
+  disableLocalStorage: true,
+  enabled: true,
+  clientUploads: true,
   bucket: process.env.R2_BUCKET!,
   config: {
     endpoint: process.env.R2_ENDPOINT!,
@@ -69,7 +62,11 @@ export default buildConfig({
   },
   i18n: {
     fallbackLanguage: 'en',
-    // supportedLanguages: { en },
+    supportedLanguages: {
+      en,
+      ka,
+    } as any,
+    translations: customTranslations as any,
   },
   collections: [Users, FurnitureImages, Categories, Furniture, Shop, Color, BlogImages, BlogPost],
   editor: lexicalEditor(),

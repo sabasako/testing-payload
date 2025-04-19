@@ -14,8 +14,15 @@ export const BlogImages: CollectionConfig = {
   },
   upload: {
     staticDir: 'blog-images',
-    adminThumbnail: 'card',
+    // adminThumbnail: 'card',
+    disableLocalStorage: true,
     mimeTypes: ['image/*'],
+    formatOptions: {
+      format: 'webp',
+      options: {
+        quality: 80,
+      },
+    },
   },
   fields: [
     {

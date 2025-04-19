@@ -14,22 +14,23 @@ export const FurnitureImages: CollectionConfig = {
   },
   upload: {
     staticDir: 'furniture-images',
-    imageSizes: [
-      {
-        name: 'details',
-        width: 600,
-        height: 350,
-        position: 'centre',
-      },
-      {
-        name: 'card',
-        width: 270,
-        height: 170,
-        position: 'centre',
-      },
-    ],
+    // imageSizes: [
+    //   {
+    //     name: 'details',
+    //     width: 600,
+    //     height: 350,
+    //     position: 'centre',
+    //   },
+    //   {
+    //     name: 'card',
+    //     width: 270,
+    //     height: 170,
+    //     position: 'centre',
+    //   },
+    // ],
     adminThumbnail: 'card',
     mimeTypes: ['image/*', 'model/gltf-binary', 'model/gltf+json', 'model/obj'],
+    disableLocalStorage: true,
   },
   fields: [
     {
