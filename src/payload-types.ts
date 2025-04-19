@@ -75,6 +75,7 @@ export interface Config {
     color: Color;
     'blog-images': BlogImage;
     'blog-post': BlogPost;
+    models: Model;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +90,7 @@ export interface Config {
     color: ColorSelect<false> | ColorSelect<true>;
     'blog-images': BlogImagesSelect<false> | BlogImagesSelect<true>;
     'blog-post': BlogPostSelect<false> | BlogPostSelect<true>;
+    models: ModelsSelect<false> | ModelsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -98,7 +100,7 @@ export interface Config {
   };
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'en' | 'ka';
   user: User & {
     collection: 'users';
   };
@@ -151,9 +153,8 @@ export interface User {
  */
 export interface FurnitureImage {
   id: number;
-  mediaType: 'main-image' | 'additional-image' | '3d-model';
+  mediaType: 'main-image' | 'additional-image';
   alt?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -218,7 +219,7 @@ export interface Furniture {
   };
   mainImage: number | FurnitureImage;
   additionalImages?: (number | FurnitureImage)[] | null;
-  '3dModel'?: (number | null) | FurnitureImage;
+  '3dModel'?: (number | null) | Model;
   category: {
     title: number | Category;
     id?: string | null;
@@ -238,6 +239,24 @@ export interface Furniture {
   inStock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models".
+ */
+export interface Model {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -277,7 +296,6 @@ export interface Color {
 export interface BlogImage {
   id: number;
   alt?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -357,6 +375,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog-post';
         value: number | BlogPost;
+      } | null)
+    | ({
+        relationTo: 'models';
+        value: number | Model;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -425,7 +447,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface FurnitureImagesSelect<T extends boolean = true> {
   mediaType?: T;
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -534,7 +555,6 @@ export interface ColorSelect<T extends boolean = true> {
  */
 export interface BlogImagesSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -560,6 +580,23 @@ export interface BlogPostSelect<T extends boolean = true> {
   content?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models_select".
+ */
+export interface ModelsSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

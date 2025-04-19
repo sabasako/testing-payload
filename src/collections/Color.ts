@@ -14,20 +14,33 @@ export const Color: CollectionConfig = {
     useAsTitle: 'color',
   },
   labels: {
-    singular: 'ფერი',
-    plural: 'ფერები',
+    singular: {
+      en: 'Color',
+      ka: 'ფერი',
+    },
+    plural: {
+      en: 'Colors',
+      ka: 'ფერები',
+    },
   },
   upload: false,
   fields: [
     {
       name: 'color',
-      label: 'ფერი',
+      label: {
+        en: 'Color',
+        ka: 'ფერი',
+      },
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
-      label: 'Slug',
+      label: {
+        en: 'Slug',
+        ka: 'სლაგი',
+      },
       type: 'text',
       admin: {
         readOnly: true,

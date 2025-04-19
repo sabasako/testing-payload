@@ -14,19 +14,32 @@ export const BlogPost: CollectionConfig = {
     useAsTitle: 'title',
   },
   labels: {
-    singular: 'ბლოგი',
-    plural: 'ბლოგი',
+    singular: {
+      en: 'Blog Post',
+      ka: 'ბლოგის პოსტი',
+    },
+    plural: {
+      en: 'Blog Posts',
+      ka: 'ბლოგის პოსტები',
+    },
   },
   fields: [
     {
       name: 'title',
-      label: 'სათაური',
+      label: {
+        en: 'Title',
+        ka: 'სათაური',
+      },
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
-      label: 'Slug',
+      label: {
+        en: 'Slug',
+        ka: 'სლაგი',
+      },
       type: 'text',
       admin: {
         readOnly: true,
@@ -35,28 +48,42 @@ export const BlogPost: CollectionConfig = {
     },
     {
       name: 'description',
-      label: 'მოკლე აღწერა',
+      label: {
+        en: 'Small description',
+        ka: 'მოკლე აღწერა',
+      },
       type: 'textarea',
       required: true,
+      localized: true,
     },
     {
       name: 'image',
-      label: 'სურათი',
+      label: {
+        en: 'Image',
+        ka: 'სურათი',
+      },
       type: 'upload',
       relationTo: 'blog-images',
       required: true,
     },
     {
       name: 'date',
-      label: 'თარიღი',
+      label: {
+        en: 'Date',
+        ka: 'თარიღი',
+      },
       type: 'date',
       required: true,
     },
     {
       name: 'content',
-      label: 'პოსტი',
+      label: {
+        en: 'Content',
+        ka: 'პოსტი',
+      },
       type: 'richText',
       required: true,
+      localized: true,
     },
   ],
   hooks: {

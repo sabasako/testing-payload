@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { en } from 'payload/i18n/en'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -34,27 +35,45 @@ export const Users: CollectionConfig = {
   //   verify: true,
   // },
   labels: {
-    singular: 'მომხმარებელი',
-    plural: 'მომხმარებლები',
+    singular: {
+      en: 'User',
+      ka: 'მომხმარებელი',
+    },
+    plural: {
+      en: 'Users',
+      ka: 'მომხმარებლები',
+    },
   },
   fields: [
     // Email added by default
     // Add more fields as needed
     {
       name: 'role',
-      label: 'როლი',
+      label: {
+        en: 'Role',
+        ka: 'როლი',
+      },
       type: 'select',
       options: [
         {
-          label: 'admin',
+          label: {
+            en: 'Admin',
+            ka: 'ადმინისტრატორი',
+          },
           value: 'admin',
         },
         {
-          label: 'editor',
+          label: {
+            en: 'Editor',
+            ka: 'რედაქტორი',
+          },
           value: 'editor',
         },
         {
-          label: 'viewer',
+          label: {
+            en: 'Viewer',
+            ka: 'ვიზიტორი',
+          },
           value: 'viewer',
         },
       ],
@@ -67,7 +86,10 @@ export const Users: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
-      label: 'სახელი',
+      label: {
+        en: 'Name',
+        ka: 'სახელი',
+      },
       required: true,
       access: {
         update: ({ req }) => req.user?.role === 'admin',
@@ -76,7 +98,10 @@ export const Users: CollectionConfig = {
     {
       name: 'lastName',
       type: 'text',
-      label: 'გვარი',
+      label: {
+        en: 'Last Name',
+        ka: 'გვარი',
+      },
       required: true,
       access: {
         update: ({ req }) => req.user?.role === 'admin',

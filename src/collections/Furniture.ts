@@ -14,19 +14,32 @@ export const Furniture: CollectionConfig = {
     useAsTitle: 'title',
   },
   labels: {
-    singular: 'ავეჯი',
-    plural: 'ავეჯები',
+    singular: {
+      en: 'Furniture',
+      ka: 'ავეჯი',
+    },
+    plural: {
+      en: 'Furnitures',
+      ka: 'ავეჯები',
+    },
   },
   fields: [
     {
       name: 'title',
-      label: 'სათაური',
+      label: {
+        en: 'Title',
+        ka: 'სათაური',
+      },
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
-      label: 'Slug',
+      label: {
+        en: 'Slug',
+        ka: 'სლაგი',
+      },
       type: 'text',
       admin: {
         readOnly: true,
@@ -35,57 +48,82 @@ export const Furniture: CollectionConfig = {
     },
     {
       name: 'description',
-      label: 'აღწერა',
+      label: {
+        en: 'Description',
+        ka: 'აღწერა',
+      },
       type: 'richText',
       required: false,
+      localized: true,
     },
     {
       name: 'price',
-      label: 'ფასი',
+      label: {
+        en: 'Price',
+        ka: 'ფასი',
+      },
       type: 'number',
       required: true,
     },
     {
       name: 'discountedPrice',
-      label: 'ფასდაკლებული ფასი',
+      label: {
+        en: 'Discounted Price',
+        ka: 'ფასდაკლებული ფასი',
+      },
       type: 'number',
       required: false,
     },
     {
-      name: 'size', // Field name
-      label: 'ზომა (სმ)', // Field label
-      type: 'group', // Group type to nest related fields
+      name: 'size',
+      label: {
+        en: 'Size',
+        ka: 'ზომა',
+      },
+      type: 'group',
       fields: [
         {
-          name: 'length', // Sub-field name
-          type: 'number', // Sub-field type
-          label: 'სიგრძე', // Sub-field label
-          required: true, // Make the field required (optional)
+          name: 'length',
+          type: 'number',
+          label: {
+            en: 'Length',
+            ka: 'სიგრძე',
+          },
+          required: true,
         },
         {
           name: 'width',
           type: 'number',
-          label: 'სიგანე',
+          label: {
+            en: 'Width',
+            ka: 'სიგანე',
+          },
           required: true,
         },
         {
           name: 'height',
           type: 'number',
-          label: 'სიმაღლე',
+          label: {
+            en: 'Height',
+            ka: 'სიმაღლე',
+          },
           required: true,
         },
       ],
       admin: {
         style: {
-          display: 'grid', // Use grid layout for better alignment
-          gridTemplateColumns: 'repeat(3, 1fr)', // 3 equal-width columns
-          gap: '1rem', // Optional spacing between fields
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '1rem',
         },
       },
     },
     {
       name: 'mainImage',
-      label: 'მთავარი სურათი',
+      label: {
+        en: 'Main Image',
+        ka: 'მთავარი სურათი',
+      },
       type: 'upload',
       relationTo: 'furniture-images',
       required: true,
@@ -95,7 +133,10 @@ export const Furniture: CollectionConfig = {
     },
     {
       name: 'additionalImages',
-      label: 'დამატებითი სურათები',
+      label: {
+        en: 'Additional Images',
+        ka: 'დამატებითი სურათები',
+      },
       type: 'upload',
       relationTo: 'furniture-images',
       hasMany: true,
@@ -105,16 +146,19 @@ export const Furniture: CollectionConfig = {
     },
     {
       name: '3dModel',
-      label: '3დ მოდელი',
-      type: 'upload',
-      relationTo: 'furniture-images',
-      filterOptions: {
-        mediaType: { equals: '3d-model' },
+      label: {
+        en: '3D Model',
+        ka: '3D მოდელი',
       },
+      type: 'upload',
+      relationTo: 'models',
     },
     {
       name: 'category',
-      label: 'კატეგორია',
+      label: {
+        en: 'Category',
+        ka: 'კატეგორია',
+      },
       type: 'array',
       fields: [
         {
@@ -129,7 +173,10 @@ export const Furniture: CollectionConfig = {
     },
     {
       name: 'shop',
-      label: 'მაღაზია',
+      label: {
+        en: 'Shop',
+        ka: 'მაღაზია',
+      },
       type: 'array',
       fields: [
         {
@@ -143,12 +190,18 @@ export const Furniture: CollectionConfig = {
     },
     {
       name: 'colors',
-      label: 'ფერები',
+      label: {
+        en: 'Colors',
+        ka: 'ფერები',
+      },
       type: 'array',
       fields: [
         {
           name: 'color',
-          label: 'ფერი',
+          label: {
+            en: 'Color',
+            ka: 'ფერი',
+          },
           type: 'relationship',
           relationTo: 'color',
           required: true,
@@ -157,7 +210,10 @@ export const Furniture: CollectionConfig = {
     },
     {
       name: 'inStock',
-      label: 'მარაგშია',
+      label: {
+        en: 'In Stock',
+        ka: 'შეკვეთით',
+      },
       type: 'checkbox',
       required: false,
     },

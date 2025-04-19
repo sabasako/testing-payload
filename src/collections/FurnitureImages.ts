@@ -9,44 +9,57 @@ export const FurnitureImages: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin' || req.user?.role === 'editor',
   },
   labels: {
-    singular: 'ავეჯის სურათები და მოდელი',
-    plural: 'ავეჯის სურათები და მოდელები',
+    singular: {
+      en: 'Furniture image',
+      ka: 'ავეჯის სურათი',
+    },
+    plural: {
+      en: 'Furniture images',
+      ka: 'ავეჯის სურათები',
+    },
   },
   upload: {
     staticDir: 'furniture-images',
-    // imageSizes: [
-    //   {
-    //     name: 'details',
-    //     width: 600,
-    //     height: 350,
-    //     position: 'centre',
-    //   },
-    //   {
-    //     name: 'card',
-    //     width: 270,
-    //     height: 170,
-    //     position: 'centre',
-    //   },
-    // ],
-    adminThumbnail: 'card',
-    mimeTypes: ['image/*', 'model/gltf-binary', 'model/gltf+json', 'model/obj'],
-    disableLocalStorage: true,
+    mimeTypes: ['image/*'],
+    // disableLocalStorage: true,
   },
   fields: [
     {
       name: 'mediaType',
       type: 'select',
       options: [
-        { label: 'მთავარი სურათი', value: 'main-image' },
-        { label: 'დამატებითი სურათები', value: 'additional-image' },
-        { label: '3დ მოდელი', value: '3d-model' },
+        {
+          label: {
+            en: 'Main image',
+            ka: 'მთავარი სურათი',
+          },
+          value: 'main-image',
+        },
+        {
+          label: {
+            en: 'Additional images',
+            ka: 'დამატებითი სურათები',
+          },
+          value: 'additional-image',
+        },
+        // {
+        //   label: {
+        //     en: '3D model',
+        //     ka: '3D მოდელი',
+        //   },
+        //   value: '3d-model',
+        // },
       ],
       required: true,
     },
     {
       name: 'alt',
       type: 'text',
-      label: 'ალტერნატიული ტექსტი',
+      label: {
+        en: 'Alt Text',
+        ka: 'ალტ ტექსტი',
+      },
+      localized: true,
     },
   ],
 }

@@ -14,20 +14,33 @@ export const Shop: CollectionConfig = {
     useAsTitle: 'name',
   },
   labels: {
-    singular: 'მაღაზია',
-    plural: 'მაღაზიები',
+    singular: {
+      en: 'Shop',
+      ka: 'მაღაზია',
+    },
+    plural: {
+      en: 'Shops',
+      ka: 'მაღაზიები',
+    },
   },
   upload: true,
   fields: [
     {
       name: 'name',
-      label: 'სახელი',
+      label: {
+        en: 'Name',
+        ka: 'სახელი',
+      },
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
-      label: 'Slug',
+      label: {
+        en: 'Slug',
+        ka: 'სლაგი',
+      },
       type: 'text',
       admin: {
         readOnly: true,

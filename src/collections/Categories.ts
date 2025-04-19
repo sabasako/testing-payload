@@ -14,20 +14,33 @@ export const Categories: CollectionConfig = {
     useAsTitle: 'title',
   },
   labels: {
-    singular: 'კატეგორია',
-    plural: 'კატეგორიები',
+    singular: {
+      en: 'Category',
+      ka: 'კატეგორია',
+    },
+    plural: {
+      en: 'Categories',
+      ka: 'კატეგორიები',
+    },
   },
   upload: true,
   fields: [
     {
       name: 'title',
-      label: 'სათაური',
+      label: {
+        en: 'Title',
+        ka: 'სათაური',
+      },
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
-      label: 'Slug',
+      label: {
+        en: 'Slug',
+        ka: 'სლაგი',
+      },
       type: 'text',
       admin: {
         readOnly: true,

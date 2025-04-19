@@ -9,13 +9,19 @@ export const BlogImages: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin' || req.user?.role === 'editor',
   },
   labels: {
-    singular: 'ბლოგის სურათები',
-    plural: 'ბლოგის სურათები',
+    singular: {
+      en: 'Blog Image',
+      ka: 'ბლოგის სურათი',
+    },
+    plural: {
+      en: 'Blog Images',
+      ka: 'ბლოგის სურათები',
+    },
   },
   upload: {
     staticDir: 'blog-images',
     // adminThumbnail: 'card',
-    disableLocalStorage: true,
+    // disableLocalStorage: true,
     mimeTypes: ['image/*'],
     formatOptions: {
       format: 'webp',
@@ -28,7 +34,11 @@ export const BlogImages: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      label: 'ალტერნატიული ტექსტი',
+      label: {
+        en: 'Alt Text',
+        ka: 'ალტ ტექსტი',
+      },
+      localized: true,
     },
   ],
 }

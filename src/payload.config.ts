@@ -18,40 +18,46 @@ import { resendAdapter } from '@payloadcms/email-resend'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { en } from '@payloadcms/translations/languages/en'
 import { customTranslations, ka } from './translations'
+import { Models } from './collections/Models'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const storage = s3Storage({
-  collections: {
-    'furniture-images': {
-      // adapter: 's3',
-      disableLocalStorage: true,
-      prefix: 'furniture-images', // Optional prefix for uploaded files
-      generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) =>
-        `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
-    },
-    'blog-images': {
-      disableLocalStorage: true,
-      prefix: 'blog-images',
-      generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) =>
-        `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
-    },
-  },
-  disableLocalStorage: true,
-  enabled: true,
-  clientUploads: true,
-  bucket: process.env.R2_BUCKET!,
-  config: {
-    endpoint: process.env.R2_ENDPOINT!,
-    credentials: {
-      accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-    },
-    region: 'auto', // Required for R2
-    forcePathStyle: true, // Required for R2
-  },
-})
+// const storage = s3Storage({
+//   collections: {
+//     'furniture-images': {
+//       // adapter: 's3',
+//       disableLocalStorage: true,
+//       prefix: 'furniture-images', // Optional prefix for uploaded files
+//       generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) =>
+//         `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
+//     },
+//     // 'blog-images': {
+//     //   disableLocalStorage: true,
+//     //   prefix: 'blog-images',
+//     //   generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) => {
+//     //     console.log(
+//     //       `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`,
+//     //     )
+
+//     //     return `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.R2_BUCKET}/${prefix ? `${prefix}/` : ''}${filename}`
+//     //   },
+//     // },
+//   },
+//   // disableLocalStorage: true,
+//   // enabled: true,
+//   // clientUploads: true,
+//   bucket: process.env.R2_BUCKET!,
+//   config: {
+//     endpoint: process.env.R2_ENDPOINT!,
+//     credentials: {
+//       accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+//       secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+//     },
+//     region: 'auto', // Required for R2
+//     forcePathStyle: true, // Required for R2
+//   },
+// })
 
 export default buildConfig({
   admin: {
@@ -68,7 +74,30 @@ export default buildConfig({
     } as any,
     translations: customTranslations as any,
   },
-  collections: [Users, FurnitureImages, Categories, Furniture, Shop, Color, BlogImages, BlogPost],
+  localization: {
+    locales: [
+      {
+        label: 'English',
+        code: 'en',
+      },
+      {
+        label: 'ქართული',
+        code: 'ka',
+      },
+    ],
+    defaultLocale: 'ka',
+  },
+  collections: [
+    Users,
+    FurnitureImages,
+    Categories,
+    Furniture,
+    Shop,
+    Color,
+    BlogImages,
+    BlogPost,
+    Models,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -87,7 +116,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    storage,
+    // storage,
     // storage-adapter-placeholder
   ],
 })
